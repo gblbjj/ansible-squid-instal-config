@@ -1,0 +1,26 @@
+- name: install squid 
+  yum:
+    name: squid
+    state: present
+    enabled: yes
+
+- name: staerted squid 
+  service:
+    name: squid
+    state: started
+
+- name: Remove default file squid.conf default
+  become: yes
+  command:  rm -rf /etc/squid/squid.conf
+  
+- name: Upload default squid.conf 
+  become: yes
+  copy: 
+    src: files/squid.conf 
+    dest: /etc/squid/ 
+    mode: 0644
+
+- name: restarted squid e finish process
+  service:
+    name: squid
+    state: restarted                  
