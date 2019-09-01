@@ -1,0 +1,6 @@
+---
+- name: install and config squid
+  hosts: proxy
+  remote_user: gabriel
+  become: yes
+  
