@@ -3,4 +3,7 @@
   hosts: proxy
   remote_user: gabriel
   become: yes
-  
+  roles:
+    - repos
+    - firewall
+    - squid

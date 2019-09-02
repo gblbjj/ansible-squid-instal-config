@@ -2,12 +2,13 @@
   yum:
     name: squid
     state: present
-    enabled: yes
+    
 
 - name: staerted squid 
   service:
     name: squid
     state: started
+    enabled: yes 
 
 - name: Remove default file squid.conf default
   become: yes
@@ -23,4 +24,15 @@
 - name: restarted squid e finish process
   service:
     name: squid
-    state: restarted                  
+    state: restarted     
+
+- name: state squid
+  shell: "systemctl status squid | sed -n 3p | awk '/active/ {print $2}'"        
+  register: service_status
+
+- debug: 
+    var: service_status.stdout          
+
+- name: check start 
+  command: systemctl start squid
+  when: service_status.stdout == "inactive"     
